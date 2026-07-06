@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home | Inventory System
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow-sm mt-5">
+            <div class="card-body text-center p-5">
+
+                <h1 class="display-5 mb-3">
+                    Inventory & Sales Management System
+                </h1>
+
+                <p class="lead text-muted">
+                    Manage products, track stock levels, and record sales efficiently.
+                </p>
+
+                <hr>
+
+                {% if user.is_authenticated %}
+
+                    <h5 class="mb-4">
+                        Welcome back, {{ user.username }}!
+                    </h5>
+
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">
+                        Go to Dashboard
+                    </a>
+
+                {% else %}
+
+                    <p class="mb-4">
+                        Please log in to access the system.
+                    </p>
+
+                    <a href="{% url 'login' %}" class="btn btn-success btn-lg">
+                        Login
+                    </a>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

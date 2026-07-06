@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'sales',
-    'users'
+    'users',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,10 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+           BASE_DIR/ "template",
+           r'C:\Users\Owner\Desktop\inventory_sys\templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,6 +86,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+LOGIN_URL = '/login/'
 
 
 # Password validation

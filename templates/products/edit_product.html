@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% Title block %}
+   Edit Product
+{% endblock %}
+
+    <div  class="container mt-4">
+
+      {% content block %}
+
+      <tr>
+          <td>{{ product.name }}</td>
+      <td>
+
+      <form method="POST">
+        {% csrf_token %}
+
+      (% if edit_product %)
+
+          {{form.as_p}}
+
+        <button class="btn btn-primary">
+            Save Product
+        </button>
+        
+      
+
+
+      </form>
+
+    </div>
+      {% endblock %}
