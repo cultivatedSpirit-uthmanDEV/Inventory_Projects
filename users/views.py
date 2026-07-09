@@ -44,3 +44,6 @@ def logout(request):
       auth_logout(request)
       return redirect('/login/')
     return render(request, "user/logout.hmtl")
+
+
+

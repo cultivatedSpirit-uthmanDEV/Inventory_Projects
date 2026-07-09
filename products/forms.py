@@ -12,3 +12,9 @@ class ProductForm(forms.ModelForm):
             'price',
             'stock_quantity',
         ]
+
+class RestockForm(forms.Form):
+     quantity_received = forms.IntegerField(
+        min_value=1,
+        label="Quantity Received"
+    )
