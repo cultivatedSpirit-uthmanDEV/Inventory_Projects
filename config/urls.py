@@ -21,6 +21,7 @@ from core import views as core_views
 from products import views as products_views
 
 urlpatterns = [
+  
     path('admin/', admin.site.urls),
 
     path('', core_views.home_view, name='home'),
@@ -42,4 +43,15 @@ urlpatterns = [
     path('delete/<int:pk>/',  products_views.delete_product, name='delete'),
 
     path("search/", products_views.search_product, name="search_product"),
-]
+
+    path('restock/<int:pk>', products_views.restock, name="restock"),
+
+    path('sold/<int:pk>/', products_views.sold_product, name="sold"),
+
+    path('history/', products_views.sale_history, name="history"),
+
+    path('category/', products_views.category, name="category"),
+
+
+]   
+  

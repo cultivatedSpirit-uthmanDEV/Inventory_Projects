@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Sales History</h2>
+
+    {% if sales %}
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Seller</th>
+                    <th>Quantity Sold</th>
+                    <th>Date Sold</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.sold_by }}</td>
+                    <td>{{ sale.total_amount }}</td>
+                    <td>{{ sale.sold_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <div class="alert alert-info">
+            No sales have been recorded.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

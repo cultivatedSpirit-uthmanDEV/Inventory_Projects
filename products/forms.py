@@ -18,3 +18,11 @@ class RestockForm(forms.Form):
         min_value=1,
         label="Quantity Received"
     )
+     
+class SoldForm(forms.Form):
+    sold_quantity = forms.IntegerField(
+        min_value=1,
+        label="Sold Quantity"
+    )
+
+

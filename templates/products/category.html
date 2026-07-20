@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if categories %}
+     {% for category in categories %}
+        <th>
+           {{ category.name }}
+        </th>
+     {% endfor %}
+    {% endif %}
+
+{% endblock content %}
