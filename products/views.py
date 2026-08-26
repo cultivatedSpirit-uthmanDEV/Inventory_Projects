@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .forms import ProductForm, RestockForm, SoldForm
 from pprint import pprint
+from django.db.models import F
+import uuid
 
 # Create your views here.
 
@@ -28,7 +30,7 @@ def add_product(request):
         if form.is_valid():
             form.save()
             return redirect('display')
-
+ 
     context = {
             'form': form
         }
@@ -36,7 +38,7 @@ def add_product(request):
     return render(
             request,
             'products/add_products.html',
-            context
+             context
         )
 
 
@@ -55,6 +57,13 @@ def edit_product(request, pk):
             'form' : form
         }
     return render(request, 'products/edit_product.html', context)
+
+def product_actions(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    context = {
+        "product": product,
+    }
+    return render(request, "products/product_actions.html", context)
 
 
 def delete_product(request, pk):
@@ -89,11 +98,30 @@ def restock(request, pk):
     if request.method == "POST":
         form = RestockForm(request.POST)
         if form.is_valid():
-            quantity_received = form.cleaned_data["quantity_received"]
-            product.stock_quantity += quantity_received
-            product.save()
-            return redirect("display")
-        
+            restock_quantity = form.cleaned_data["restock_quantity"]
+           # product.stock_quantity += quantity_received
+           # product.save()
+
+            # Using F() with update() instead of:
+            #   product.stock_quantity += quantity_received
+            #   product.save()
+            #
+            # Why: the old way reads stock_quantity into Python,
+            # adds to it, then saves it back. If two requests restock
+            # the same product at nearly the same time, both could
+            # read the same starting value before either saves —
+            # causing one update to silently overwrite the other
+            # (a race condition).
+            #
+            # F("stock_quantity") tells the database to perform the
+            # increment using the CURRENT value in the database at
+            # the moment of the update, as a single atomic SQL
+            # operation: UPDATE ... SET stock_quantity = stock_quantity + X
+            # This avoids the race condition entirely.
+           
+            Product.objects.filter(pk=pk).update(
+            stock_quantity=F("stock_quantity") + restock_quantity)
+        return redirect("display")
     else:
         form = RestockForm()
     context = {
@@ -118,7 +146,8 @@ def sold_product(request, pk):
                 Sale.objects.create(
                     total_amount=sold_quantity,
                     sold_by=request.user,
-                    reference_number= pk
+                     reference_number=str(uuid.uuid4())[:8].upper(),
+                    product= product
                 )
                 return redirect("display")
                 
@@ -134,7 +163,7 @@ def sold_product(request, pk):
 
 
 def sale_history(request):
-    sales = Sale.objects.all().order_by("sold_at")
+    sales = Sale.objects.all().order_by("sold_by")
 
     context = {
         "sales":sales

@@ -7,6 +7,7 @@ from products.models import Product
 
 class Sale(models.Model):
     reference_number = models.CharField(max_length=20, unique=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     sold_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+<p><h2>{{product.name}}</h2></p>
+
+<p>Currently Available in Stock : {{ product.stock_quantity }}</p>
+<p>Enter the amount sold below</p>
+
+
     <form method="POST">
       {% csrf_token %}
       {{form.as_p}}

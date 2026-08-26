@@ -14,15 +14,15 @@ class ProductForm(forms.ModelForm):
         ]
 
 class RestockForm(forms.Form):
-     quantity_received = forms.IntegerField(
+     restock_quantity = forms.IntegerField(
         min_value=1,
-        label="Quantity Received"
+        label="Quantity"
     )
      
 class SoldForm(forms.Form):
     sold_quantity = forms.IntegerField(
         min_value=1,
-        label="Sold Quantity"
+        label="Quantity"
     )
 
 

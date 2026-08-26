@@ -52,6 +52,8 @@ urlpatterns = [
 
     path('category/', products_views.category, name="category"),
 
+    path('product_actions<int:pk>/', products_views.product_actions, name="product_actions"),
+
 
 ]   
   
