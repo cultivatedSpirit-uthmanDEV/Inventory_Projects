@@ -24,6 +24,21 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
+    class Meta:
+             
+             permissions = [
+        ("restock_product", "Can restock products"),
+        ("edit_product", "Can edit products"),
+        ("product_actions", "Can perform product actions"),
+        ("display_products", "Can display products"),
+        ("sold_product", "Can record sold products"),
+        ("sale_history", "can see sales history")
+    ]
+
+
+
+       
     def __str__(self):
         return self.name
 
